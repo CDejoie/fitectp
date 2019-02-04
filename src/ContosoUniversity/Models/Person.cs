@@ -36,7 +36,7 @@ namespace ContosoUniversity.Models
         }
 
 
-        
+
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -54,5 +54,6 @@ namespace ContosoUniversity.Models
 
         [Display(Name = "Profil Picture")]
         public string ProfilePictureLink { get; set; }
+
     }
 }

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ContosoUniversity.Models.Course>
+
+@{
+    ViewBag.Title = "Subscribe";
+}
+
+<h2>Subscribe</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Credits)
+        </th>
+        <th>
+            Department
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Credits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Choose this course", "Subscribtion", new { id = item.CourseID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@*Cette balise provoque des erreurs en cas d'utilisation sur le controller "Subscribtion" lié au TempData (utilisation unique ?) *@
+@*<p>
+    @Html.ActionLink("Back to details", "Details", new { id = TempData["StudentID"] })
+</p>*@
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div>
+        <div style="color:red">@ViewBag.ErrorMessage</div>
+    </div>
+}

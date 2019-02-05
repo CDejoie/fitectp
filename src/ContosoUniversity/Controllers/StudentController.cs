@@ -2,7 +2,9 @@
 using ContosoUniversity.Models;
 using PagedList;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -13,6 +15,7 @@ namespace ContosoUniversity.Controllers
     public class StudentController : Controller
     {
         private SchoolContext db = new SchoolContext();
+
         public SchoolContext DbContext
         {
             get { return db; }
@@ -78,6 +81,10 @@ namespace ContosoUniversity.Controllers
             {
                 return HttpNotFound();
             }
+
+            //Ajout de TempData afin de transférer l'id de l'étudiant avec les controllers Subscribe et Subscribtion
+            TempData["StudentID"] = id;
+
             return View(student);
         }
 
@@ -194,6 +201,40 @@ namespace ContosoUniversity.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        // GET: Student/Subscribe
+        public ActionResult Subscribe()
+        {
+            //On récupère la liste de tous les cours pour l'envoyer dans la vue
+            List<Course> Courses = db.Courses.ToList();
+            TempData["StudentID"] = TempData["StudentID"];
+
+            return View(Courses);
+        }
+
+        public ActionResult Subscribtion(int id)
+        {
+            int studentID = (int)TempData["StudentID"];
+            Enrollment enrollementFind = db.Enrollments.FirstOrDefault(e => e.StudentID == studentID && e.CourseID == id);
+
+            if (enrollementFind == null)
+            {
+                db.Enrollments.Add(new Enrollment { CourseID = id, StudentID = studentID });
+                db.SaveChanges();
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "You already subscribed to this lesson";
+
+                List<Course> Courses = db.Courses.ToList();
+                TempData["StudentID"] = TempData["StudentID"];
+
+                return View("Subscribe",Courses);
+            }
+
+            return RedirectToAction("Details", new { controller = "Student" , action = "Details", id = studentID });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

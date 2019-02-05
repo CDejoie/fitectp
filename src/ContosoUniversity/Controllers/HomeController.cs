@@ -9,12 +9,12 @@ using ContosoUniversity.ViewModels;
 
 namespace ContosoUniversity.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         private SchoolContext db = new SchoolContext();
 
-        [AllowAnonymous]
+        
         public ActionResult Index()
         {
             return View();

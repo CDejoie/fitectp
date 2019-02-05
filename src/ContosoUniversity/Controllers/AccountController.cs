@@ -1,5 +1,6 @@
 ﻿using ContosoUniversity.DAL;
 using ContosoUniversity.Models;
+using ContosoUniversity.Business;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,6 @@ namespace ContosoUniversity.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        [AllowAnonymous]
         public ActionResult Index()
         {
             using (SchoolContext db = new SchoolContext())
@@ -20,7 +20,6 @@ namespace ContosoUniversity.Controllers
                 return View(db.People.ToList());
             }
         }
-        [AllowAnonymous]
         public ActionResult Register()
         {
             List<string> typePerson = new List<string>();
@@ -43,7 +42,6 @@ namespace ContosoUniversity.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(string ChoixPerson, string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
         {
@@ -60,19 +58,15 @@ namespace ContosoUniversity.Controllers
                 {
                     if (ChoixPerson == "Student")
                     {
-
-                        db.Students.Add(new Student { LastName = LastName, FirstMidName = FirstMidName, Email = Email, UserName = UserName, Password = Password, ConfirmPassword = ConfirmPassword, EnrollmentDate = DateTime.Now });
-                        db.SaveChanges();
+                        AccountBusiness.RegistredConfirmationStudent(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
-                        ViewBag.Message = FirstMidName + " " + LastName + "Successfully registred.";
+                        ViewBag.Message =" " + FirstMidName + " " + LastName + "Successfully registred.";
                     }
                     else
                     {
-
-                        db.Instructors.Add(new Instructor { LastName = LastName, FirstMidName = FirstMidName, Email = Email, UserName = UserName, Password = Password, ConfirmPassword = ConfirmPassword, HireDate = DateTime.Now });
-                        db.SaveChanges();
+                        AccountBusiness.RegistredConfirmationInstructor(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
-                        ViewBag.Message = FirstMidName + " " + LastName + "Successfully registred.";
+                        ViewBag.Message = " " +FirstMidName + " " + LastName + "Successfully registred.";
                     }
                 }
 
@@ -81,19 +75,18 @@ namespace ContosoUniversity.Controllers
             List<string> typePerson = new List<string>();
             typePerson.Add("Student");
             typePerson.Add("Instructor");
-
             ViewBag.typePerson = new SelectList(typePerson);
 
             return View();
         }
-        [AllowAnonymous]
+      
+
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Login(Student student, Instructor instructor, string returnUrl)
         {
             SchoolContext db = new SchoolContext();

@@ -6,8 +6,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ContosoUniversity.Controllers
@@ -233,6 +236,56 @@ namespace ContosoUniversity.Controllers
             }
 
             return RedirectToAction("Details", new { controller = "Student" , action = "Details", id = studentID });
+        }
+
+        //GET add Student profile picture
+        [HttpGet]
+        public ActionResult ProfilPicture(int id)
+        {
+            Student studentFind = db.Students.First(s => s.ID == id);
+            TempData["StudentID"] = id;
+
+            return View(studentFind);
+        }
+
+        //POST add Student profile picture
+        [HttpPost]
+        public ActionResult ProfilPicture(HttpPostedFileBase file)
+        {
+            int studentID = (int)TempData["StudentID"];
+            Student studentFind = db.Students.First(s => s.ID == studentID);
+
+            if (file.ContentLength > 0)
+            {
+                string filepath = Path.Combine(Server.MapPath("~/ProfilPictures"), studentFind.FirstMidName + studentFind.LastName + ".jpg");
+                file.SaveAs(filepath);
+                try
+                {
+                    studentFind.ProfilePictureLink = "~/ProfilPictures/" + studentFind.FirstMidName + studentFind.LastName +".jpg";
+                    db.SaveChanges();
+
+                    return View("Details", studentFind);
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+            }
+            else
+            {
+                ViewBag.Message = "File not upload successfully";
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -13,15 +13,15 @@
         <div style="display:inline-block">
             @if (Model.ProfilePictureLink == null)
             {
-                <img src="~/ProfilPictures/no-profile.jpg" height="100" width="100">
+                <img src="~/ProfilPictures/no-profile.jpeg" height="100" width="100">
                 <p>@Html.ActionLink("Add profil picture", "ProfilPicture", new { id = Model.ID })</p>
             }
             else
             {
-                <img src="@Model.ProfilePictureLink" height="100" width="100">
+                <img src="@Model.ProfilePictureLink" height="100" width="100" style="margin-bottom:20px">
             }
         </div>
-        <dl class="dl-horizontal" style="display:inline-block; margin-top:0">
+        <dl class="dl-horizontal" style="display:inline-block">
             <dt>
                 @Html.DisplayNameFor(model => model.LastName)
             </dt>

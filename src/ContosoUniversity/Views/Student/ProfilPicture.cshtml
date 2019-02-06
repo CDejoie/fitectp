@@ -14,11 +14,12 @@
 @using (Html.BeginForm("ProfilPicture", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div>
-        @Html.TextBox("file", "", new { type = "file" })
+        @*@Html.TextBox("file", "", new { type = "file" })*@
+        <input type="file" value="Choose file" name="file" id="fileUpdload" accept="image/png, image/jpeg" />
         <br />
-        <input type="submit" value="Save Files"/>
+        <input type="submit" value="Save Files" />
         <br />
-        @ViewBag.Message
+        <div style="color:red">@ViewBag.Message</div>
     </div>
 }
 

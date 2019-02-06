@@ -255,36 +255,35 @@ namespace ContosoUniversity.Controllers
             int studentID = (int)TempData["StudentID"];
             Student studentFind = db.Students.First(s => s.ID == studentID);
 
-            if (file.ContentLength > 0)
+            if (file == null)
             {
-                string filepath = Path.Combine(Server.MapPath("~/ProfilPictures"), studentFind.FirstMidName + studentFind.LastName + ".jpg");
-                file.SaveAs(filepath);
-                try
-                {
-                    studentFind.ProfilePictureLink = "~/ProfilPictures/" + studentFind.FirstMidName + studentFind.LastName +".jpg";
-                    db.SaveChanges();
+                ViewBag.Message = "File doesn't exist";
+                TempData["StudentID"] = TempData["StudentID"];
 
-                    return View("Details", studentFind);
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
-                    throw;
-                }
+                return View();
+            }
+            else if (file.ContentLength > 100000)
+            {
+                ViewBag.Message = "File exceed 100KB";
+                TempData["StudentID"] = TempData["StudentID"];
+
+                return View();
+            }
+            else if (file.ContentType != "image/jpeg" && file.ContentType != "image/png")
+            {
+                ViewBag.Message = "Bad file extension";
+                TempData["StudentID"] = TempData["StudentID"];
+                return View();
             }
             else
-            {
-                ViewBag.Message = "File not upload successfully";
-                return View();
+	        {
+                string filepath = Path.Combine(Server.MapPath("~/ProfilPictures"), studentFind.FirstMidName + studentFind.LastName + ".jpeg");
+                file.SaveAs(filepath);
+
+                studentFind.ProfilePictureLink = "/ProfilPictures/" + studentFind.FirstMidName + studentFind.LastName + ".jpeg";
+                db.SaveChanges();
+
+                return View("Details", studentFind);
             }
         }
 

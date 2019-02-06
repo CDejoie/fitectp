@@ -42,13 +42,13 @@ namespace ContosoUniversity.Controllers
                 {
                     if (ChoixPerson == "Student")
                     {
-                        accountBusiness.StudentRegistration(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
+                        accountBusiness.StudentRegistration(LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
                         ViewBag.Message =" " + FirstMidName + " " + LastName + " successfully registred.";
                     }
                     else
                     {
-                        accountBusiness.InstructorRegistration(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
+                        accountBusiness.InstructorRegistration(LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
                         ViewBag.Message = " " +FirstMidName + " " + LastName + " successfully registred.";
                     }

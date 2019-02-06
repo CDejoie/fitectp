@@ -31,16 +31,6 @@ namespace ContosoUniversity.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult ChoicePerson(Student student, Instructor instructor)
-        //{
-        //    SchoolContext db = new SchoolContext();
-        //    if (db.People.Any(x => x.UserName == student.))
-        //}
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(string ChoixPerson, string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
@@ -52,7 +42,7 @@ namespace ContosoUniversity.Controllers
                 if (db.People.Any(x => x.UserName == UserName))
                 {
                     ModelState.AddModelError("User Name", "User Name already exists.");
-                    ViewBag.MessageDoublon = "This login (UserName) already exists. Try again";
+                    ViewBag.MessageDoublon = "The login " + UserName + " already exists. Try again";
                 }
                 else
                 {
@@ -60,13 +50,13 @@ namespace ContosoUniversity.Controllers
                     {
                         AccountBusiness.RegistredConfirmationStudent(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
-                        ViewBag.Message =" " + FirstMidName + " " + LastName + "Successfully registred.";
+                        ViewBag.Message =" " + FirstMidName + " " + LastName + " successfully registred.";
                     }
                     else
                     {
                         AccountBusiness.RegistredConfirmationInstructor(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
-                        ViewBag.Message = " " +FirstMidName + " " + LastName + "Successfully registred.";
+                        ViewBag.Message = " " +FirstMidName + " " + LastName + " successfully registred.";
                     }
                 }
 

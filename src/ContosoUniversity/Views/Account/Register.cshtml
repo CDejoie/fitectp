@@ -12,13 +12,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Person</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @if (ViewBag.Message != null)
         {
             <div class="form-group">
-                <div class="col-md-10">@ViewBag.Message</div>
+                <div class="text-success">@ViewBag.Message</div>
             </div>
         }
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -30,9 +29,9 @@
         }
 
         <div class="form-group">
-            @Html.Label("ChoixPersonne", "Choix Personnes")
+            @Html.Label("ChoixPersonne", "Choix Personnes", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ChoixPerson", (SelectList)ViewBag.typePerson)
+                @Html.DropDownList("ChoixPerson", (SelectList)ViewBag.typePerson, new { @class="btn btn-default btn-sm"})
             </div>
         </div>
 

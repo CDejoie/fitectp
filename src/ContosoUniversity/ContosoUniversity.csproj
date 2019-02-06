@@ -254,7 +254,6 @@
     <Content Include="Views\Instructor\ProfilPicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

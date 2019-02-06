@@ -10,6 +10,7 @@ using ContosoUniversity.DAL;
 using ContosoUniversity.Models;
 using ContosoUniversity.ViewModels;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 
 namespace ContosoUniversity.Controllers
 {
@@ -251,6 +252,56 @@ namespace ContosoUniversity.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //GET add Instructor profile picture
+        [HttpGet]
+        public ActionResult ProfilPicture(int id)
+        {
+            Instructor instructorFind = db.Instructors.First(i => i.ID == id);
+            TempData["InstructorID"] = id;
+
+            return View(instructorFind);
+        }
+
+        //POST add Instructor profile picture
+        [HttpPost]
+        public ActionResult ProfilPicture(HttpPostedFileBase file)
+        {
+            int instructorID = (int)TempData["InstructorID"];
+            Instructor instructorFind = db.Instructors.First(i => i.ID == instructorID);
+
+            if (file == null)
+            {
+                ViewBag.Message = "File doesn't exist";
+                TempData["InstructorID"] = TempData["InstructorID"];
+
+                return View();
+            }
+            else if (file.ContentLength > 100000)
+            {
+                ViewBag.Message = "File exceed 100KB";
+                TempData["InstructorID"] = TempData["InstructorID"];
+
+                return View();
+            }
+            else if (file.ContentType != "image/jpeg" && file.ContentType != "image/png")
+            {
+                ViewBag.Message = "Bad file extension";
+                TempData["InstructorID"] = TempData["InstructorID"];
+                return View();
+            }
+            else
+            {
+                string filepath = Path.Combine(Server.MapPath("~/ProfilPictures"), instructorFind.FirstMidName + instructorFind.LastName + ".jpeg");
+                file.SaveAs(filepath);
+
+                instructorFind.ProfilePictureLink = "/ProfilPictures/" + instructorFind.FirstMidName + instructorFind.LastName + ".jpeg";
+                db.SaveChanges();
+
+                return View("Details", instructorFind);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

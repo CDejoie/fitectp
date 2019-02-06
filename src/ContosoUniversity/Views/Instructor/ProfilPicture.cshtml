@@ -11,7 +11,7 @@
 </ul>
 <br />
 
-@using (Html.BeginForm("ProfilPicture", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("ProfilPicture", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div>
         <input type="file" value="Choose file" name="file" id="fileUpdload" accept="image/png, image/jpeg" />
@@ -21,6 +21,3 @@
         <div style="color:red">@ViewBag.Message</div>
     </div>
 }
-
-
-

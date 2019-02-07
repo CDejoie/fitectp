@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using ContosoUniversity.DAL;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Web.Http;
 
 namespace ContosoUniversity
 {
@@ -16,10 +17,14 @@ namespace ContosoUniversity
         {
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbInterception.Add(new SchoolInterceptorTransientErrors());
             DbInterception.Add(new SchoolInterceptorLogging());
+            // Formatage du code API en JSON
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
     }
 }

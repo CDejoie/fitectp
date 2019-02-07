@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Net.Mime;
 
 namespace ContosoUniversity.Controllers
 {
@@ -24,6 +25,7 @@ namespace ContosoUniversity.Controllers
             get { return db; }
             set { db = value; }
         }
+
 
         // GET: Student
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -269,7 +271,8 @@ namespace ContosoUniversity.Controllers
 
                 return View();
             }
-            else if (file.ContentType != "image/jpeg" && file.ContentType != "image/png")
+            // On test si le fichier n'est pas un fichier en extension ".jpeg" (avec la classe MediaTypeNames) ou ".png" (pas d'equivalent dans la classe MediaTypeNames)
+            else if (file.ContentType != MediaTypeNames.Image.Jpeg && file.ContentType != "image/png")
             {
                 ViewBag.Message = "Bad file extension";
                 TempData["StudentID"] = TempData["StudentID"];

@@ -15,7 +15,7 @@ namespace ContosoUniversity.Controllers
         AccountBusiness accountBusiness = new AccountBusiness();
 
         // Envoie d'une liste comportant les 2 types de Person à la vue "Register"
-        List<string> typePerson = new List<string>()
+        readonly List<string> typePerson = new List<string>()
             {
                "Student",
                "Instructor"
@@ -68,13 +68,13 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         public ActionResult Login(Student student, Instructor instructor)
         {
-            if (student.EnrollmentDate != null)
+            if (student.EnrollmentDate != default(DateTime))
             {
                 Person user = accountBusiness.PeopleLogin(student.UserName, student.Password);
                 if (user != null)
                 {
-                    Session["ID"] = user.ID.ToString();
-                    Session["UserName"] = user.UserName.ToString();
+                    //Session["ID"] = user.ID.ToString();
+                    //Session["UserName"] = user.UserName.ToString();
                     return RedirectToAction("Index", "Home");
                 }
                 if (user == null)
@@ -87,15 +87,14 @@ namespace ContosoUniversity.Controllers
 
                 // Par défaut, rediriger vers la page d'accueil :
                 return RedirectToAction("Index", "Home");
-
             }
             else
             {
                 Person user = accountBusiness.PeopleLogin(instructor.UserName, instructor.Password); ;
                 if (user != null)
                 {
-                    Session["ID"] = user.ID.ToString();
-                    Session["UserName"] = user.UserName.ToString();
+                    //Session["ID"] = user.ID.ToString();
+                    //Session["UserName"] = user.UserName.ToString();
                     return RedirectToAction("Index", "Home");
                 }
                 if (user == null)
@@ -115,6 +114,7 @@ namespace ContosoUniversity.Controllers
         public ActionResult LogOut()
         {
             Session.Remove("ID");
+            Session.Remove("UserName");
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }

@@ -4,7 +4,7 @@ using ContosoUniversity.Business;
 using ContosoUniversity.DAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContosoUniversityTest2
+namespace ContosoUniversityTest
 {
     [TestClass]
     public class AccountTests

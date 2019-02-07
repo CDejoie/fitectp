@@ -73,8 +73,8 @@ namespace ContosoUniversity.Controllers
                 Person user = accountBusiness.PeopleLogin(student.UserName, student.Password);
                 if (user != null)
                 {
-                    //Session["ID"] = user.ID.ToString();
-                    //Session["UserName"] = user.UserName.ToString();
+                    Session["ID"] = user.ID.ToString();
+                    Session["UserName"] = user.UserName.ToString();
                     return RedirectToAction("Index", "Home");
                 }
                 if (user == null)
@@ -93,8 +93,8 @@ namespace ContosoUniversity.Controllers
                 Person user = accountBusiness.PeopleLogin(instructor.UserName, instructor.Password); ;
                 if (user != null)
                 {
-                    //Session["ID"] = user.ID.ToString();
-                    //Session["UserName"] = user.UserName.ToString();
+                    Session["ID"] = user.ID.ToString();
+                    Session["UserName"] = user.UserName.ToString();
                     return RedirectToAction("Index", "Home");
                 }
                 if (user == null)

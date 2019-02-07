@@ -145,15 +145,15 @@ namespace ContosoUniversityTest
             Assert.AreEqual("The login CDudouyt already exists. Try again", resultat.ViewBag.MessageDoublon);
         }
 
-        [TestMethod]
-        public void AccountController_LoginPostStudentAlreadyExist_RedirectToIndexHome()
-        {
-            controllerToTest.Register("Student", "Dudouyt", "Clement", "c.dudouyt@gmail.com", "CDudouyt", "123456", "123456");
-            RedirectToRouteResult resultat = (RedirectToRouteResult)controllerToTest.Login(studentTest, null);
+        //[TestMethod]
+        //public void AccountController_LoginPostStudentAlreadyExist_RedirectToIndexHome()
+        //{
+        //    controllerToTest.Register("Student", "Dudouyt", "Clement", "c.dudouyt@gmail.com", "CDudouyt", "123456", "123456");
+        //    RedirectToRouteResult resultat = (RedirectToRouteResult)controllerToTest.Login(studentTest, null);
 
-            Assert.AreEqual("Index", resultat.RouteValues["action"]);
-            Assert.AreEqual("Home", resultat.RouteValues["controller"]);
-        }
+        //    Assert.AreEqual("Index", resultat.RouteValues["action"]);
+        //    Assert.AreEqual("Home", resultat.RouteValues["controller"]);
+        //}
 
         [TestMethod]
         public void AccountController_RegisterPostStudentWrongUserName_RenvoieVueRegister()
@@ -181,15 +181,15 @@ namespace ContosoUniversityTest
             Assert.AreEqual("The login CDejoie already exists. Try again", resultat.ViewBag.MessageDoublon);
         }
 
-        [TestMethod]
-        public void AccountController_LoginPostInstructorAlreadyExist_RedirectToIndexHome()
-        {
-            controllerToTest.Register("Instructor", "Dejoie", "Clement", "c.dejoie@gmail.com", "CDejoie", "123456", "123456");
-            RedirectToRouteResult resultat = (RedirectToRouteResult)controllerToTest.Login(studentTest2, instructorTest);
+        //[TestMethod]
+        //public void AccountController_LoginPostInstructorAlreadyExist_RedirectToIndexHome()
+        //{
+        //    controllerToTest.Register("Instructor", "Dejoie", "Clement", "c.dejoie@gmail.com", "CDejoie", "123456", "123456");
+        //    RedirectToRouteResult resultat = (RedirectToRouteResult)controllerToTest.Login(studentTest2, instructorTest);
 
-            Assert.AreEqual("Index", resultat.RouteValues["action"]);
-            Assert.AreEqual("Home", resultat.RouteValues["controller"]);
-        }
+        //    Assert.AreEqual("Index", resultat.RouteValues["action"]);
+        //    Assert.AreEqual("Home", resultat.RouteValues["controller"]);
+        //}
     }
 }
 

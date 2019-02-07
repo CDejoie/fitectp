@@ -10,6 +10,7 @@ namespace ContosoUniversity
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
+
             // Route par défaut de l'API
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

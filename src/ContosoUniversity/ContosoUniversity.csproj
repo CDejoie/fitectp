@@ -129,11 +129,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Business\AccountBusiness.cs" />
+    <Compile Include="Business\LessonBusiness.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="DAL\SchoolConfiguration.cs" />
@@ -174,6 +176,10 @@
     <Compile Include="Migrations\201902041146514_UpdatesDatabase.cs" />
     <Compile Include="Migrations\201902041146514_UpdatesDatabase.Designer.cs">
       <DependentUpon>201902041146514_UpdatesDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902071601537_UpdateCourseData.cs" />
+    <Compile Include="Migrations\201902071601537_UpdateCourseData.Designer.cs">
+      <DependentUpon>201902071601537_UpdateCourseData.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -262,6 +268,8 @@
     <Content Include="Views\Student\Subscribe.cshtml" />
     <Content Include="Views\Student\ProfilPicture.cshtml" />
     <Content Include="Views\Instructor\ProfilPicture.cshtml" />
+    <Content Include="Views\Lesson\Index.cshtml" />
+    <Content Include="Views\Lesson\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902041146514_UpdatesDatabase.resx">
       <DependentUpon>201902041146514_UpdatesDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071601537_UpdateCourseData.resx">
+      <DependentUpon>201902071601537_UpdateCourseData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

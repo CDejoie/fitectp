@@ -11,10 +11,24 @@ namespace ContosoUniversity.Models
     {
      
         public int CourseDateID { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime FirstCourse { get; set; }
+
+        [Required]
+        [Range(1, 5)]
         public DayOfWeek Day { get; set; }
-        public string StartHour { get; set; }
-        public int Duration { get; set; }
+
+        [Required]
+        [Range(8, 19)]
+        public int StartHour { get; set; }
+
+        [Required]
+        [Range(0.25, 4)]
+        public decimal Duration { get; set; }
+
+        [Required]
         public int CourseID { get; set; }
 
         public virtual Course Course { get; set; }

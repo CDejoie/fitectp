@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Profile picture";
+}
+
+<h2>Add profile picture</h2>
+
+<h4>Image file rules :</h4>
+<ul>
+    <li>The image file can't exceed 100KB</li>
+    <li>The file extension must be ".jpeg" or ".png"</li>
+</ul>
+<br />
+
+@using (Html.BeginForm("ProfilPicture", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <input type="file" value="Choose file" name="file" id="fileUpdload" accept="image/png, image/jpeg" />
+        <br />
+        <input type="submit" value="Save Files" />
+        <br />
+        <div style="color:red">@ViewBag.Message</div>
+    </div>
+}
+
+
+

@@ -9,11 +9,22 @@ using System.Web.Mvc;
 
 namespace ContosoUniversity.Business
 {
-    public static class AccountBusiness
+    public class AccountBusiness
     {
-        public static void RegistredConfirmationStudent( string ChoixPerson, string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
+        private SchoolContext db;
+        public AccountBusiness()
         {
-            SchoolContext db = new SchoolContext();
+            db = new SchoolContext();
+        }
+
+        public bool UserNameExist(string username)
+        {
+            if (db.People.Any(x => x.UserName == username)) return true;
+            else return false;
+        }
+
+        public void StudentRegistration(string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
+        {
             db.Students.Add(new Student
             {
                 LastName = LastName,
@@ -25,27 +36,33 @@ namespace ContosoUniversity.Business
                 EnrollmentDate = DateTime.Now
             });
             db.SaveChanges();
-
         }
-    
 
-    public static void RegistredConfirmationInstructor(string ChoixPerson, string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
-    {
-        SchoolContext db = new SchoolContext();
-        db.Instructors.Add(new Instructor
+        public void InstructorRegistration(string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
         {
-            LastName = LastName,
-            FirstMidName = FirstMidName,
-            Email = Email,
-            UserName = UserName,
-            Password = Password,
-            ConfirmPassword = ConfirmPassword,
-            HireDate = DateTime.Now 
-        });
-        db.SaveChanges();
+            db.Instructors.Add(new Instructor
+            {
+                LastName = LastName,
+                FirstMidName = FirstMidName,
+                Email = Email,
+                UserName = UserName,
+                Password = Password,
+                ConfirmPassword = ConfirmPassword,
+                HireDate = DateTime.Now
+            });
+            db.SaveChanges();
+        }
+
+        public Person PeopleLogin(string userName, string password)
+        {
+            return db.People.SingleOrDefault(x => x.UserName == userName && x.Password == password);
+        }
+
+        public void Dispose()
+        {
+            db.Dispose();
         }
     }
- 
 }
 
 

@@ -9,30 +9,46 @@
 <div>
     <h4>Student</h4>
     <hr />
+    <div>
+        <div style="display:inline-block">
+            @if (Model.ProfilePictureLink == null)
+            {
+                <img src="~/ProfilPictures/no-profile.jpeg" height="100" width="100">
+                <p>@Html.ActionLink("Add profil picture", "ProfilPicture", new { id = Model.ID })</p>
+            }
+            else
+            {
+                <img src="@Model.ProfilePictureLink" height="100" width="100" style="margin-bottom:20px">
+            }
+        </div>
+        <dl class="dl-horizontal" style="display:inline-block">
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstMidName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstMidName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EnrollmentDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EnrollmentDate)
+            </dd>
+        </dl>
+    </div>
+    <hr style="margin-top:0"/>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstMidName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstMidName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EnrollmentDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EnrollmentDate)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Enrollments)
         </dt>
@@ -57,7 +73,7 @@
         </dd>
     </dl>
 </div>
-<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Subscribe at course", "Subscribe")
+ 

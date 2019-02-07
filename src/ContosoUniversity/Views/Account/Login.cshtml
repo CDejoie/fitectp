@@ -1,6 +1,4 @@
-﻿
-
-@model ContosoUniversity.Models.Person
+﻿@model ContosoUniversity.Models.Person
 
 @{
     ViewBag.Title = "Login";
@@ -8,13 +6,9 @@
 
 <h2>Login</h2>
 
-
 @using (Html.BeginForm())
 {
-
-
     <div class="form-horizontal">
-        <h4>Person</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -43,8 +37,8 @@
 
 }
 
-<div>
-    <p>Not registered?</p>
+<div style="margin-top : 40px">
+    <p>Not registered ?</p>
     @Html.ActionLink("Register", "Register")
 </div>
 

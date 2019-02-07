@@ -12,89 +12,65 @@ namespace ContosoUniversity.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Account
-        public ActionResult Index()
-        {
-            using (SchoolContext db = new SchoolContext())
+        AccountBusiness accountBusiness = new AccountBusiness();
+
+        // Envoie d'une liste comportant les 2 types de Person à la vue "Register"
+        List<string> typePerson = new List<string>()
             {
-                return View(db.People.ToList());
-            }
-        }
+               "Student",
+               "Instructor"
+            };
+
         public ActionResult Register()
         {
-            List<string> typePerson = new List<string>();
-            typePerson.Add("Student");
-            typePerson.Add("Instructor");
-
             ViewBag.typePerson = new SelectList(typePerson);
-
             return View();
         }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult ChoicePerson(Student student, Instructor instructor)
-        //{
-        //    SchoolContext db = new SchoolContext();
-        //    if (db.People.Any(x => x.UserName == student.))
-        //}
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(string ChoixPerson, string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
         {
-            SchoolContext db = new SchoolContext();
-
             if (ModelState.IsValid)
             {
-                if (db.People.Any(x => x.UserName == UserName))
+                if (accountBusiness.UserNameExist(UserName))
                 {
                     ModelState.AddModelError("User Name", "User Name already exists.");
-                    ViewBag.MessageDoublon = "This login (UserName) already exists. Try again";
+                    ViewBag.MessageDoublon = "The login " + UserName + " already exists. Try again";
                 }
                 else
                 {
                     if (ChoixPerson == "Student")
                     {
-                        AccountBusiness.RegistredConfirmationStudent(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
+                        accountBusiness.StudentRegistration(LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
-                        ViewBag.Message =" " + FirstMidName + " " + LastName + "Successfully registred.";
+                        ViewBag.Message =" " + FirstMidName + " " + LastName + " successfully registred.";
                     }
                     else
                     {
-                        AccountBusiness.RegistredConfirmationInstructor(ChoixPerson, LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
+                        accountBusiness.InstructorRegistration(LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
-                        ViewBag.Message = " " +FirstMidName + " " + LastName + "Successfully registred.";
+                        ViewBag.Message = " " +FirstMidName + " " + LastName + " successfully registred.";
                     }
                 }
 
             }
-
-            List<string> typePerson = new List<string>();
-            typePerson.Add("Student");
-            typePerson.Add("Instructor");
             ViewBag.typePerson = new SelectList(typePerson);
 
             return View();
         }
       
-
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(Student student, Instructor instructor, string returnUrl)
+        public ActionResult Login(Student student, Instructor instructor)
         {
-            SchoolContext db = new SchoolContext();
-            ViewBag.ReturnUrl = returnUrl;
             if (student.EnrollmentDate != null)
             {
-
-                var user = db.People.SingleOrDefault(x => x.UserName == student.UserName && x.Password == student.Password);
+                Person user = accountBusiness.PeopleLogin(student.UserName, student.Password);
                 if (user != null)
                 {
                     Session["ID"] = user.ID.ToString();
@@ -104,7 +80,7 @@ namespace ContosoUniversity.Controllers
                 if (user == null)
                 {
                     {
-                        ModelState.AddModelError(string.Empty, "Username or Password is wrong");
+                        ModelState.AddModelError("", "Username or Password is wrong");
                         return View(student);
                     }
                 }
@@ -115,8 +91,7 @@ namespace ContosoUniversity.Controllers
             }
             else
             {
-
-                var user = db.People.SingleOrDefault(x => x.UserName == instructor.UserName && x.Password == instructor.Password);
+                Person user = accountBusiness.PeopleLogin(instructor.UserName, instructor.Password); ;
                 if (user != null)
                 {
                     Session["ID"] = user.ID.ToString();
@@ -126,7 +101,7 @@ namespace ContosoUniversity.Controllers
                 if (user == null)
                 {
                     {
-                        ModelState.AddModelError(string.Empty, "Username or Password is wrong");
+                        ModelState.AddModelError("", "Username or Password is wrong");
                         return View(instructor);
                     }
                 }

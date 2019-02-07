@@ -9,40 +9,53 @@
 <div>
     <h4>Instructor</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.OfficeAssignment.Location)
-        </dt>
+    <div>
+        <div style="display:inline-block">
+            @if (Model.ProfilePictureLink == null)
+            {
+                <img src="~/ProfilPictures/no-profile.jpeg" height="100" width="100">
+                <p>@Html.ActionLink("Add profil picture", "ProfilPicture", new { id = Model.ID })</p>
+            }
+            else
+            {
+                <img src="@Model.ProfilePictureLink" height="100" width="100" style="margin-bottom:20px">
+            }
+        </div>
+        <dl class="dl-horizontal" style="display:inline-block">
+            <dt>
+                @Html.DisplayNameFor(model => model.OfficeAssignment.Location)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OfficeAssignment.Location)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.OfficeAssignment.Location)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstMidName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstMidName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstMidName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FirstMidName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HireDate)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.HireDate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HireDate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.HireDate)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |

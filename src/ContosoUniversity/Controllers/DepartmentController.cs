@@ -10,9 +10,12 @@ using System.Web.Mvc;
 using ContosoUniversity.DAL;
 using ContosoUniversity.Models;
 using System.Data.Entity.Infrastructure;
+using ContosoUniversity;
+using ContosoUniversity.AuthData;
 
 namespace ContosoUniversity.Controllers
 {
+    [AuthenticationFilter]
     public class DepartmentController : Controller
     {
         private SchoolContext db = new SchoolContext();

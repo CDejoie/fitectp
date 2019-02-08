@@ -48,11 +48,11 @@ namespace ContosoUniversity.Controllers
                     courseList.Add(course);
                 }
                 //Affichage des données
-                studentDTO.ID = student.ID;
-                studentDTO.FirstMidName = student.FirstMidName;
-                studentDTO.LastName = student.LastName;
-                studentDTO.EnrollmentDate = student.EnrollmentDate;
-                studentDTO.Enrollments = courseList;
+                studentDTO.id = student.ID;
+                studentDTO.firstMidName = student.FirstMidName;
+                studentDTO.lastName = student.LastName;
+                studentDTO.enrollmentDate = student.EnrollmentDate;
+                studentDTO.enrollments = courseList;
 
                 return Ok(studentDTO);
             }

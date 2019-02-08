@@ -1,0 +1,16 @@
+User-agent: *
+Crawl-delay: 60
+Allow: /Home/Index #régler le nombre de secondes que doit attendre le robot entre chaque requêtes successives 
+Disallow: /Home #interdire l'accès à la section Home
+Disallow: /Student #interdire l'accès à la section Student
+Disallow: /Course #interdire l'accès à la section Course
+Disallow: /Instructor #interdire l'accès à la section Instructor
+Disallow: /Departement #interdire l'accès à la section Departement
+Disallow: /Register #interdire l'accès à la section Register
+Disallow: /Login #interdire l'accès à la section Login
+Disallow: /Lesson #interdire l'accès à la section Lesson
+Disallow: /Api #interdire l'accès aux API
+Disallow: /*.jpeg$ #interdire l'accès des robots comme google image d'accéder aux jpeg
+Disallow: /*.png$ #interdire l'accès des robots comme google image d'accéder aux png
+Disallow: /404-error/ #interdire l'accès aux pages avec le code du statut 404
+Disallow: /401-error/ #interdire l'accès aux pages avec le code du statut 401

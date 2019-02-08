@@ -22,6 +22,7 @@ namespace ContosoUniversity.Models
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Column("Email")]
         public string Email { get; set; }
 

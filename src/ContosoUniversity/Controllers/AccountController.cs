@@ -14,15 +14,17 @@ namespace ContosoUniversity.Controllers
     {
         AccountBusiness accountBusiness = new AccountBusiness();
 
-        // Envoie d'une liste comportant les 2 types de Person à la vue "Register"
+        // Liste comportant les 2 types de Person
         readonly List<string> typePerson = new List<string>()
             {
                "Student",
                "Instructor"
             };
 
+        //GET Register
         public ActionResult Register()
         {
+            //Envoie des types de person à la vue
             ViewBag.typePerson = new SelectList(typePerson);
             return View();
         }
@@ -33,19 +35,22 @@ namespace ContosoUniversity.Controllers
         {
             if (ModelState.IsValid)
             {
+                //On vérifie que le username existe, s'il existe on renvoie une erreur
                 if (accountBusiness.UserNameExist(UserName))
                 {
                     ModelState.AddModelError("User Name", "User Name already exists.");
                     ViewBag.MessageDoublon = "The login " + UserName + " already exists. Try again";
                 }
                 else
-                {
+                {   
+                    //Sinon, si c'est un étudiant, on crée un étudiant
                     if (ChoixPerson == "Student")
                     {
                         accountBusiness.StudentRegistration(LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
                         ModelState.Clear();
                         ViewBag.Message =" " + FirstMidName + " " + LastName + " successfully registred.";
                     }
+                    //Sinon, on crée un instructeur
                     else
                     {
                         accountBusiness.InstructorRegistration(LastName, FirstMidName, Email, UserName, Password, ConfirmPassword);
@@ -55,11 +60,13 @@ namespace ContosoUniversity.Controllers
                 }
 
             }
+            //En cas de message d'erreur on retour toujours la liste de type de person
             ViewBag.typePerson = new SelectList(typePerson);
 
             return View();
         }
       
+        //GET Login
         public ActionResult Login()
         {
             return View();
@@ -68,9 +75,13 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         public ActionResult Login(Student student, Instructor instructor)
         {
+            //Si la person logger a un EnrollmentDate (= c'est un étudiant)
             if (student.EnrollmentDate != default(DateTime))
             {
+                //On tente de le logger
                 Person user = accountBusiness.PeopleLogin(student.UserName, student.Password);
+
+                //Si le userName correspond au password
                 if (user != null)
                 {
                     Session["ID"] = user.ID.ToString();

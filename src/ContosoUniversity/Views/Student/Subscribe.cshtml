@@ -47,11 +47,6 @@
 
 </table>
 
-@*Cette balise provoque des erreurs en cas d'utilisation sur le controller "Subscribtion" lié au TempData (utilisation unique ?) *@
-@*<p>
-    @Html.ActionLink("Back to details", "Details", new { id = TempData["StudentID"] })
-</p>*@
-
 @if (ViewBag.ErrorMessage != null)
 {
     <div>

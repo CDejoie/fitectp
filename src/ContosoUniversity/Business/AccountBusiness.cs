@@ -17,12 +17,14 @@ namespace ContosoUniversity.Business
             db = new SchoolContext();
         }
 
+        //Methode permettant de vérifier que le userName existe
         public bool UserNameExist(string username)
         {
             if (db.People.Any(x => x.UserName == username)) return true;
             else return false;
         }
 
+        //Methode permettant d'enregistrer un étudiant
         public void StudentRegistration(string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
         {
             db.Students.Add(new Student
@@ -38,6 +40,7 @@ namespace ContosoUniversity.Business
             db.SaveChanges();
         }
 
+        //Methode permettant d'enregistrer un instructeur
         public void InstructorRegistration(string LastName, string FirstMidName, string Email, string UserName, string Password, string ConfirmPassword)
         {
             db.Instructors.Add(new Instructor
@@ -53,6 +56,7 @@ namespace ContosoUniversity.Business
             db.SaveChanges();
         }
 
+        //Methode permettant de verifier userName et password
         public Person PeopleLogin(string userName, string password)
         {
             return db.People.SingleOrDefault(x => x.UserName == userName && x.Password == password);

@@ -212,6 +212,8 @@ namespace ContosoUniversity.Controllers
         {
             //On récupère la liste de tous les cours pour l'envoyer dans la vue
             List<Course> Courses = db.Courses.ToList();
+
+            //Sauvegarde du TempData["StudentID"]
             TempData["StudentID"] = TempData["StudentID"];
 
             return View(Courses);
@@ -219,32 +221,45 @@ namespace ContosoUniversity.Controllers
 
         public ActionResult Subscribtion(int id)
         {
+            //Définition de l'id de l'étudiant
             int studentID = (int)TempData["StudentID"];
+
+            //On cherche si l'étudiant ne c'est pas encore inscrit à ce cours
             Enrollment enrollementFind = db.Enrollments.FirstOrDefault(e => e.StudentID == studentID && e.CourseID == id);
 
+            //S'il n'y a pas d'inscription
             if (enrollementFind == null)
             {
+                //Ajout d'un étudiant
                 db.Enrollments.Add(new Enrollment { CourseID = id, StudentID = studentID });
                 db.SaveChanges();
             }
             else
             {
+                //Sinon on renvoie une erreur
                 ViewBag.ErrorMessage = "You already subscribed to this lesson";
 
+                //On récupère la liste de tous les cours pour l'envoyer dans la vue
                 List<Course> Courses = db.Courses.ToList();
+
+                //Sauvegarde du TempData["StudentID"]
                 TempData["StudentID"] = TempData["StudentID"];
 
                 return View("Subscribe",Courses);
             }
 
+            //Si l'inscription est faites, on se redirige vers la vue Details
             return RedirectToAction("Details", new { controller = "Student" , action = "Details", id = studentID });
         }
 
         //GET add Student profile picture
         [HttpGet]
         public ActionResult ProfilPicture(int id)
-        {
+        {   
+            //On recherche l'étudiant qui correspond à l'id
             Student studentFind = db.Students.First(s => s.ID == id);
+
+            //On sauvegarde l'id dans un TempData
             TempData["StudentID"] = id;
 
             return View(studentFind);
@@ -254,9 +269,12 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         public ActionResult ProfilPicture(HttpPostedFileBase file)
         {
+            //On récupère notre id etudiant
             int studentID = (int)TempData["StudentID"];
+            //On cherche l'étudiant qui correspond
             Student studentFind = db.Students.First(s => s.ID == studentID);
 
+            //Si le fichier est vide, on renvoie une erreur
             if (file == null)
             {
                 ViewBag.Message = "File doesn't exist";
@@ -264,6 +282,7 @@ namespace ContosoUniversity.Controllers
 
                 return View();
             }
+            //Si le fichier à une taille supérieur à 100000 Bites, on renvoie un message d'erreur
             else if (file.ContentLength > 100000)
             {
                 ViewBag.Message = "File exceed 100KB";
@@ -271,18 +290,22 @@ namespace ContosoUniversity.Controllers
 
                 return View();
             }
-            // On test si le fichier n'est pas un fichier en extension ".jpeg" (avec la classe MediaTypeNames) ou ".png" (pas d'equivalent dans la classe MediaTypeNames)
+            // On test si le fichier n'est pas un fichier en extension ".jpeg" (avec la classe MediaTypeNames) ou ".png" (pas d'equivalent dans la classe MediaTypeNames), sinon on renvoie une erreur
             else if (file.ContentType != MediaTypeNames.Image.Jpeg && file.ContentType != "image/png")
             {
                 ViewBag.Message = "Bad file extension";
                 TempData["StudentID"] = TempData["StudentID"];
                 return View();
             }
+            //Si le fichier remplie les conditions ci-dessus
             else
 	        {
+                //On récupère le chemin dans lequel on enregistre le fichier avec son nom complet
                 string filepath = Path.Combine(Server.MapPath("~/ProfilPictures"), studentFind.FirstMidName + studentFind.LastName + ".jpeg");
+                //Puis on l'enregistre
                 file.SaveAs(filepath);
 
+                //On enregistre le lien dans le champ ProfilePictureLink de l'étudiant (afin de pouvoir l'afficher dans la vue Details)
                 studentFind.ProfilePictureLink = "/ProfilPictures/" + studentFind.FirstMidName + studentFind.LastName + ".jpeg";
                 db.SaveChanges();
 

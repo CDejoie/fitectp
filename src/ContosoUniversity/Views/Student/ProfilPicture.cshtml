@@ -11,6 +11,7 @@
 </ul>
 <br />
 
+@*Begin Form appelant l'action ProfilPicture du controller Student avec la méthode Post et qui renvoie un fichier*@
 @using (Html.BeginForm("ProfilPicture", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div>

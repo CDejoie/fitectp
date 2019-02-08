@@ -12,20 +12,21 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Net.Mime;
+using ContosoUniversity.AuthData;
 
 namespace ContosoUniversity.Controllers
 {
+    [AuthenticationFilter]
     public class StudentController : Controller
     {
         private SchoolContext db = new SchoolContext();
 
         public SchoolContext DbContext
+
         {
             get { return db; }
             set { db = value; }
         }
-
 
         // GET: Student
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -234,10 +235,10 @@ namespace ContosoUniversity.Controllers
                 List<Course> Courses = db.Courses.ToList();
                 TempData["StudentID"] = TempData["StudentID"];
 
-                return View("Subscribe",Courses);
+                return View("Subscribe", Courses);
             }
 
-            return RedirectToAction("Details", new { controller = "Student" , action = "Details", id = studentID });
+            return RedirectToAction("Details", new { controller = "Student", action = "Details", id = studentID });
         }
 
         //GET add Student profile picture
@@ -279,7 +280,7 @@ namespace ContosoUniversity.Controllers
                 return View();
             }
             else
-	        {
+            {
                 string filepath = Path.Combine(Server.MapPath("~/ProfilPictures"), studentFind.FirstMidName + studentFind.LastName + ".jpeg");
                 file.SaveAs(filepath);
 

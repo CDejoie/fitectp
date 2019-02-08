@@ -45,9 +45,9 @@ namespace ContosoUniversity.Controllers
                 }
                 //Affichage des données
                 studentDTO.id = student.ID;
-                studentDTO.firstname = student.FirstMidName;
-                studentDTO.lastname = student.LastName;
-                studentDTO.enrollmentDate = student.EnrollmentDate.ToString("yyyy-MM-dd");
+                studentDTO.firstMidName = student.FirstMidName;
+                studentDTO.lastName = student.LastName;
+                studentDTO.enrollmentDate = student.EnrollmentDate;
                 studentDTO.enrollments = courseList;
 
                 return Ok(studentDTO);

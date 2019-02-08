@@ -13,7 +13,7 @@ namespace ContosoUniversity.Controllers
     public class AccountController : Controller
     {
         AccountBusiness accountBusiness = new AccountBusiness();
-
+       
         // Envoie d'une liste comportant les 2 types de Person à la vue "Register"
         readonly List<string> typePerson = new List<string>()
             {
@@ -74,7 +74,7 @@ namespace ContosoUniversity.Controllers
                 if (user != null)
                 {
                     Session["ID"] = user.ID.ToString();
-                    Session["UserName"] = user.UserName.ToString();
+                    //Session["UserName"] = user.UserName.ToString();
                     return RedirectToAction("Index", "Home");
                 }
                 if (user == null)

@@ -11,9 +11,12 @@ using ContosoUniversity.Models;
 using ContosoUniversity.ViewModels;
 using System.Data.Entity.Infrastructure;
 using System.IO;
+using ContosoUniversity.AuthData;
+
 
 namespace ContosoUniversity.Controllers
 {
+    [AuthenticationFilter]
     public class InstructorController : Controller
     {
         private SchoolContext db = new SchoolContext();

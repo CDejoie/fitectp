@@ -41,9 +41,11 @@ namespace ContosoUniversity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseDate lesson)
         {
+            DateTime firstCourse = lessonB.FirstCourseDate(lesson.CourseID);
+
             try
             {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && (firstCourse == default(DateTime) || firstCourse == lesson.FirstCourse))
                 {
                     lessonB.AddLesson(lesson);
 
@@ -54,6 +56,15 @@ namespace ContosoUniversity.Controllers
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.)
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+
+            if (firstCourse != default(DateTime) && firstCourse != lesson.FirstCourse)
+            {
+                ModelState.AddModelError("", "This course already have first date course : " + firstCourse.ToString("d"));
+
+                PopulateCourseDropDownList(lesson.CourseDateID);
+
+                return View(lesson);
             }
 
             PopulateCourseDropDownList(lesson.CourseDateID);
@@ -89,8 +100,9 @@ namespace ContosoUniversity.Controllers
             }
 
             CourseDate lessonToUpdate = lessonB.FindLesson(id);
+            DateTime firstCourse = lessonB.FirstCourseDate(lessonToUpdate.CourseID);
 
-            if (TryUpdateModel(lessonToUpdate, "", new string[] { "FirstCourse", "Day", "StartHour", "Duration" }))
+            if (TryUpdateModel(lessonToUpdate, "", new string[] { "FirstCourse", "Day", "StartHour", "Duration" }) && (firstCourse == default(DateTime) || firstCourse == lessonToUpdate.FirstCourse))
             {
                 try
                 {
@@ -104,8 +116,46 @@ namespace ContosoUniversity.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
+
+            if (firstCourse != default(DateTime) && firstCourse != lessonToUpdate.FirstCourse)
+            {
+                ModelState.AddModelError("", "This course already have first date course : " + firstCourse.ToString("d"));
+
+                PopulateCourseDropDownList(lessonToUpdate.CourseDateID);
+
+                return View(lessonToUpdate);
+            }
+
             PopulateCourseDropDownList(lessonToUpdate.CourseDateID);
             return View(lessonToUpdate);
+        }
+
+        // GET: Lesson/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            CourseDate lesson = lessonB.FindLesson(id);
+
+            if (lesson == null)
+            {
+                return HttpNotFound();
+            }
+            return View(lesson);
+        }
+
+        // POST: Course/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            CourseDate lesson = lessonB.FindLesson(id);
+            lessonB.RemoveLesson(lesson);
+
+            return RedirectToAction("Index");
         }
     }
 }

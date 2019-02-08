@@ -35,6 +35,23 @@ namespace ContosoUniversity.Business
         {
             return db.CourseDates.Find(lessonId);
         }
+        public void RemoveLesson(CourseDate lesson)
+        {
+            db.CourseDates.Remove(lesson);
+            db.SaveChanges();
+        }
+        public DateTime FirstCourseDate (int courseId)
+        {
+            try
+            {
+                CourseDate course = db.CourseDates.FirstOrDefault(c => c.CourseID == courseId);
+                return course.FirstCourse;
+            }
+            catch (Exception)
+            {
+                return default(DateTime);
+            }
+        }
         public void SaveDataBase()
         {
             db.SaveChanges();

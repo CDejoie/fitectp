@@ -112,21 +112,21 @@ namespace ContosoUniversityTest
             Assert.IsNull(personRegister);
         }
 
-        [TestMethod]
-        public void AccountController_LoginGet_RenvoiVueRegister()
-        {
-            ViewResult resultat = (ViewResult)controllerToTest.Login();
+        //[TestMethod]
+        //public void AccountController_LoginGet_RenvoiVueRegister()
+        //{
+        //    ViewResult resultat = (ViewResult)controllerToTest.Login();
 
-            Assert.AreEqual("", resultat.ViewName);
-        }
+        //    Assert.AreEqual("", resultat.ViewName);
+        //}
 
-        [TestMethod]
-        public void AccountController_RegisterGet_RenvoiVueRegister()
-        {
-            ViewResult resultat = (ViewResult)controllerToTest.Register();
+        //[TestMethod]
+        //public void AccountController_RegisterGet_RenvoiVueRegister()
+        //{
+        //    ViewResult resultat = (ViewResult)controllerToTest.Register();
 
-            Assert.AreEqual("", resultat.ViewName);
-        }
+        //    Assert.AreEqual("", resultat.ViewName);
+        //}
 
         [TestMethod]
         public void AccountController_RegisterPostStudent_RenvoiViewBag()
@@ -155,14 +155,14 @@ namespace ContosoUniversityTest
         //    Assert.AreEqual("Home", resultat.RouteValues["controller"]);
         //}
 
-        [TestMethod]
-        public void AccountController_RegisterPostStudentWrongUserName_RenvoieVueRegister()
-        {
-            controllerToTest.Register("Student", "Dudouyt", "Clement", "c.dudouyt@gmail.com", "CDudouyt", "1234567", "1234567");
-            ViewResult resultat = (ViewResult)controllerToTest.Login(studentTest, null);
+        //[TestMethod]
+        //public void AccountController_RegisterPostStudentWrongUserName_RenvoieVueRegister()
+        //{
+        //    controllerToTest.Register("Student", "Dudouyt", "Clement", "c.dudouyt@gmail.com", "CDudouyt", "1234567", "1234567");
+        //    ViewResult resultat = (ViewResult)controllerToTest.Login(studentTest, null);
 
-            Assert.AreEqual("", resultat.ViewName);
-        }
+        //    Assert.AreEqual("", resultat.ViewName);
+        //}
 
         [TestMethod]
         public void AccountController_RegisterPostInstructor_RenvoiViewBag()

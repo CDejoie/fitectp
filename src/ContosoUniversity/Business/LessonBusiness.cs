@@ -20,19 +20,24 @@ namespace ContosoUniversity.Business
         {
             return db.Courses.OrderBy(c => c.Title).ToList();
         }
-
         public IQueryable<CourseDate> ListeFiltreLesson(int? selectedCourse, int courseId)
         {
             return db.CourseDates
                 .Where(c => !selectedCourse.HasValue || c.CourseID == courseId)
                 .OrderBy(c => c.CourseDateID);
         }
-
         public void AddLesson(CourseDate lesson)
         {
             db.CourseDates.Add(lesson);
             db.SaveChanges();
         }
-
+        public CourseDate FindLesson (int? lessonId)
+        {
+            return db.CourseDates.Find(lessonId);
+        }
+        public void SaveDataBase()
+        {
+            db.SaveChanges();
+        }
     }
 }

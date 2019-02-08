@@ -177,9 +177,9 @@
     <Compile Include="Migrations\201902041146514_UpdatesDatabase.Designer.cs">
       <DependentUpon>201902041146514_UpdatesDatabase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902071601537_UpdateCourseData.cs" />
-    <Compile Include="Migrations\201902071601537_UpdateCourseData.Designer.cs">
-      <DependentUpon>201902071601537_UpdateCourseData.cs</DependentUpon>
+    <Compile Include="Migrations\201902080842310_UpdateCourseDate.cs" />
+    <Compile Include="Migrations\201902080842310_UpdateCourseDate.Designer.cs">
+      <DependentUpon>201902080842310_UpdateCourseDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -270,6 +270,7 @@
     <Content Include="Views\Instructor\ProfilPicture.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
     <Content Include="Views\Lesson\Create.cshtml" />
+    <Content Include="Views\Lesson\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -302,8 +303,8 @@
     <EmbeddedResource Include="Migrations\201902041146514_UpdatesDatabase.resx">
       <DependentUpon>201902041146514_UpdatesDatabase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902071601537_UpdateCourseData.resx">
-      <DependentUpon>201902071601537_UpdateCourseData.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902080842310_UpdateCourseDate.resx">
+      <DependentUpon>201902080842310_UpdateCourseDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

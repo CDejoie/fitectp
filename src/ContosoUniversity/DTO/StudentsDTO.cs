@@ -7,13 +7,10 @@ namespace ContosoUniversity.DTO
 {
     public class StudentsDTO
     {
-
-        public int ID { get; set; }
-        public string LastName { get; set; }
-        public string FirstMidName { get; set; }
-        public DateTime EnrollmentDate { get; set; }
-        public List<Dictionary<string, string>> Enrollments { get; set; }
-
-
+        public int id { get; set; }
+        public string lastname { get; set; }
+        public string firstname { get; set; }
+        public string enrollmentDate { get; set; }
+        public List<Dictionary<string, string>> enrollments { get; set; }
     }
 }

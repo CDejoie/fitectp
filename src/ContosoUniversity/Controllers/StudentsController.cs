@@ -20,15 +20,11 @@ namespace ContosoUniversity.Controllers
     {
         private SchoolContext db = new SchoolContext();
 
-      
-        
-
         // GET: api/Students/5
         //[ResponseType(typeof(Student))]
      
         public IHttpActionResult GetStudent(int id)
         {
-
             try
             {
                 //Création d'un étudiant et de la mise en relation avec l'ID
@@ -48,11 +44,11 @@ namespace ContosoUniversity.Controllers
                     courseList.Add(course);
                 }
                 //Affichage des données
-                studentDTO.ID = student.ID;
-                studentDTO.FirstMidName = student.FirstMidName;
-                studentDTO.LastName = student.LastName;
-                studentDTO.EnrollmentDate = student.EnrollmentDate;
-                studentDTO.Enrollments = courseList;
+                studentDTO.id = student.ID;
+                studentDTO.firstname = student.FirstMidName;
+                studentDTO.lastname = student.LastName;
+                studentDTO.enrollmentDate = student.EnrollmentDate.ToString("yyyy-MM-dd");
+                studentDTO.enrollments = courseList;
 
                 return Ok(studentDTO);
             }
@@ -61,21 +57,6 @@ namespace ContosoUniversity.Controllers
                 return NotFound();
 
             }
-        }
-
-       
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool StudentExists(int id)
-        {
-            return db.People.Count(e => e.ID == id) > 0;
         }
     }
 }

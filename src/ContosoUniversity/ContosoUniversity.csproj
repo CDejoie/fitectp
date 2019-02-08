@@ -145,7 +145,6 @@
     <Compile Include="DAL\SchoolInitializer.cs" />
     <Compile Include="DAL\SchoolInterceptorLogging.cs" />
     <Compile Include="DAL\SchoolInterceptorTransientErrors.cs" />
-    <Compile Include="DTO\HomeDTO.cs" />
     <Compile Include="DTO\InstructorsDTO.cs" />
     <Compile Include="DTO\StudentsDTO.cs" />
     <Compile Include="Global.asax.cs">
@@ -196,7 +195,6 @@
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AssignedCourseData.cs" />
-    <Compile Include="ViewModels\CourseInstructorDTO.cs" />
     <Compile Include="ViewModels\EnrollmentDateGroup.cs" />
     <Compile Include="ViewModels\InstructorIndexData.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using ContosoUniversity.Business;
+﻿using ContosoUniversity.AuthData;
+using ContosoUniversity.Business;
 using ContosoUniversity.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace ContosoUniversity.Controllers
 {
+    [AuthenticationFilter]
     public class LessonController : Controller
     {
         LessonBusiness lessonB = new LessonBusiness();

@@ -84,14 +84,18 @@ namespace ContosoUniversity.Controllers
                 //Si le userName correspond au password
                 if (user != null)
                 {
+                    //On met dans une varibale de Session l'ID et le username
                     Session["ID"] = user.ID.ToString();
                     Session["UserName"] = user.UserName.ToString();
+
                     return RedirectToAction("Index", "Home");
                 }
+                //Sinon on renvoie un message d'erreur et en model l'étudiant qu'on a tenté d'enregistrer
                 if (user == null)
                 {
                     {
                         ModelState.AddModelError("", "Username or Password is wrong");
+
                         return View(student);
                     }
                 }
@@ -99,19 +103,27 @@ namespace ContosoUniversity.Controllers
                 // Par défaut, rediriger vers la page d'accueil :
                 return RedirectToAction("Index", "Home");
             }
+            //Sinon (= si instructor)
             else
             {
-                Person user = accountBusiness.PeopleLogin(instructor.UserName, instructor.Password); ;
+                //On tente de le logger
+                Person user = accountBusiness.PeopleLogin(instructor.UserName, instructor.Password);
+
+                //Si le userName correspond au password
                 if (user != null)
                 {
+                    //On met dans une varibale de Session l'ID et le username
                     Session["ID"] = user.ID.ToString();
                     Session["UserName"] = user.UserName.ToString();
+
                     return RedirectToAction("Index", "Home");
                 }
+                //Sinon on renvoie un message d'erreur et en model l'instructor qu'on a tenté d'enregistrer
                 if (user == null)
                 {
                     {
                         ModelState.AddModelError("", "Username or Password is wrong");
+
                         return View(instructor);
                     }
                 }
@@ -121,12 +133,14 @@ namespace ContosoUniversity.Controllers
             }
         }
 
-        [AllowAnonymous]
+        //Action permettant de se delogger
         public ActionResult LogOut()
         {
+            //On supprime les variables de session
             Session.Remove("ID");
             Session.Remove("UserName");
             Session.Clear();
+
             return RedirectToAction("Index", "Home");
         }
     }

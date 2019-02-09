@@ -14,9 +14,12 @@ namespace ContosoUniversityTest
     [TestClass]
     public class APITest
     {
+        //Déclaration de la classe business utile pour le test
         private AccountBusiness accountBusiness;
+        //Déclaration de la classe controler à tester
         private StudentsController controllerToTest;
 
+        //Student pouvant être utilisé pour les tests
         public readonly Student studentTest = new Student()
         {
             ID = 1,
@@ -29,6 +32,7 @@ namespace ContosoUniversityTest
             EnrollmentDate = DateTime.Now
         };
 
+        //Student pouvant être utilisé pour les tests
         public readonly Instructor instructorTest = new Instructor()
         {
             ID = 1,
@@ -41,23 +45,29 @@ namespace ContosoUniversityTest
             HireDate = DateTime.Now
         };
 
+        //Classe de test qui se lancera A CHAQUE DEBUT DE NOUVELLE METHODE DE TEST
         [TestInitialize]
         public void Init_AvantChaqueTest()
         {
+            //Initialisation de la classe business
             accountBusiness = new AccountBusiness();
+            //Initialisation de la classe controller
             controllerToTest = new StudentsController();
 
+            //Supression (si besoin), création et initialisation de la base de donnée via le context "SchoolContext"
             IDatabaseInitializer<SchoolContext> init = new DropCreateDatabaseAlways<SchoolContext>();
             Database.SetInitializer(init);
             init.InitializeDatabase(new SchoolContext());
         }
 
+        //Classe de test qui se lancera A CHAQUE FIN METHODE DE TEST
         [TestCleanup]
         public void ApresChaqueTest()
         {
             accountBusiness.Dispose();
         }
 
+        //On verifie que l'API GetStudent retourne un OK()
         [TestMethod]
         public void GetStudent_SurStudentExistantSansCours_RetourneTypeOK()
         {
@@ -71,6 +81,7 @@ namespace ContosoUniversityTest
             Assert.IsInstanceOfType(okResult, typeof(OkNegotiatedContentResult<StudentsDTO>));
         }
 
+        //On test que l'API retourne bien le bon contenu
         [TestMethod]
         public void GetStudent_SurStudentExistantSansCours_RetourneJSON()
         {
